@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Autonomous Agents</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" type="image/png" href="./img/favicon.png">
+    <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:300,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
+</head>
+<body>
+    <div id="canvases" class="canvases">
+        <canvas class="pattern" id="pattern-canvas"></canvas>
+        <canvas class="flow" id="flow-canvas"></canvas>
+        <canvas class="agents" id="agents-canvas"></canvas>
+    </div>
+
+    <div class="canvas-controls">
+        <h3>Controls</h3>
+        <p>
+            <label>Seek mouse:</label>
+            <input id="control-seek" step="0.1" type="number" class="canvas-control" />
+        </p>
+        <p>
+            <label>Flee mouse:</label>
+            <input id="control-flee" step="0.1" type="number" class="canvas-control" />
+        </p>
+        <p>
+            <label>Separation:</label>
+            <input id="control-separate" step="0.1" type="number" class="canvas-control" />
+        </p>
+        <p>
+            <label>Alignment:</label>
+            <input id="control-align" step="0.1" type="number" class="canvas-control" />
+        </p>
+        <p>
+            <label>Cohesion:</label>
+            <input id="control-cohere" step="0.1" type="number" class="canvas-control" />
+        </p>
+        <p>
+            <label>Flow field:</label>
+            <input id="control-flow" step="0.1" type="number" class="canvas-control" />
+        </p>
+        <p>
+            <label for="control-show-flow" class="for-checkbox">Show flow field:</label>
+            <input id="control-show-flow" type="checkbox" class="canvas-control" />
+        </p>
+    </div>
+
+    <script src="./js/lib/animation.js"></script>
+    <script src="./js/lib/vector.js"></script>
+    <script src="./js/lib/particle.js"></script>
+    <script src="./js/lib/utils.js"></script>
+    <script src="./js/lib/noise.js"></script>
+    <script>
+        var App = window.App || {};
+        App.elements = {
+            patternCanvas: document.querySelector('#pattern-canvas'),
+            agentsCanvas: document.querySelector('#agents-canvas'),
+            flowCanvas: document.querySelector('#flow-canvas'),
+            canvasesParent: document.querySelector('#canvases'),
+            forceControls: {
+                seek: document.querySelector('#control-seek'),
+                flee: document.querySelector('#control-flee'),
+                separate: document.querySelector('#control-separate'),
+                align: document.querySelector('#control-align'),
+                cohere: document.querySelector('#control-cohere'),
+                flow: document.querySelector('#control-flow')
+            },
+            showFlowField: document.querySelector('#control-show-flow')
+        }
+    </script>
+    <script src="./js/pattern.js"></script>
+    <script src="./js/behaviors.js"></script>
+    <script src="./js/flowfield.js"></script>
+    <script src="./js/agents.js"></script>
+    <script src="./js/ui.js"></script>
+</body>
+</html>

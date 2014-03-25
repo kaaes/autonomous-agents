@@ -3,18 +3,18 @@ function Vector(x, y) {
   this.y = y || 0;
 }
 
-Vector._vectors = []
+Vector._vectors = [];
 
 Vector.get = function(x, y) {
   var v = Vector._vectors.pop() || new Vector();
   v.x = x || 0;
   v.y = y || 0;
   return v;
-}
+};
 
 Vector.recycle = function(v) {
   Vector._vectors.push(v);
-}
+};
 
 /* static methods */
 Vector.add = function(v1, v2) {
@@ -36,19 +36,19 @@ Vector.div = function(v, scale) {
 
 Vector.angle = function(v1, v2) {
   return Math.atan2(v2.y - v1.y, v2.x - v1.x);
-}
+};
 
 Vector.angleBetween = function(v1, v2) {
   return Math.acos(v1.dot(v2) / (v1.magnitude() * v2.magnitude()));
-}
+};
 
 Vector.dist = function(v1, v2) {
   return v1.dist(v2);
-}
+};
 
 Vector.distSq = function(v1, v2) {
   return v1.distSq(v2);
-}
+};
 
 /* dynamic methods */
 Vector.prototype.add = function(v) {
@@ -97,18 +97,18 @@ Vector.prototype.copy = function() {
 
 Vector.prototype.heading = function() {
   return Math.atan2(this.y, this.x);
-}
+};
 
 Vector.prototype.limit = function(magnitude) {
-  if(this.magnitude() > magnitude) {
+  if (this.magnitude() > magnitude) {
     this.normalize();
     this.mult(magnitude);
   }
-}
+};
 
 Vector.prototype.dot = function(vector) {
   return this.x * vector.x + this.y * vector.y;
-}
+};
 
 Vector.prototype.dist = function(v) {
   var dx = this.x - v.x;

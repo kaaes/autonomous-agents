@@ -4,7 +4,7 @@ var utils = {
   },
 
   rad: function(angle) {
-    return angle * Math.PI/180;
+    return angle * Math.PI / 180;
   },
 
   normalize: function(value, range) {

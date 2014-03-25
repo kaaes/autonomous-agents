@@ -41,7 +41,7 @@
     var sum = Vector.get();
     var steer = Vector.get();
     var count = 0;
-    
+
     for (var i = 0; i < vehicles.length; i++) {
       distanceSq = Vector.distSq(mover.position, vehicles[i].position);
       if (distanceSq > 0 && distanceSq < FLOCK_DISTANCE * FLOCK_DISTANCE) {
@@ -68,7 +68,7 @@
     var steer = Vector.get();
     var diff;
     var count = 0;
-    
+
     for (var i = 0; i < vehicles.length; i++) {
       separationDistance = mover.radius + vehicles[i].radius;
       distanceSq = Vector.distSq(mover.position, vehicles[i].position);
@@ -126,7 +126,7 @@
     var steer = Vector.sub(desired, mover.velocity);
     steer.limit(MAX_FORCE);
     Vector.recycle(desired);
-    return steer
+    return steer;
   }
 
 })(window);

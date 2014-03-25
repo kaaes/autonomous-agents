@@ -28,7 +28,7 @@
 
     cols = Math.ceil(width / GRID_SIZE);
     rows = Math.ceil(height / GRID_SIZE);
-    
+
     ctx.strokeStyle = STROKE_STYLE;
     ctx.lineWidth = LINE_WIDTH;
 
@@ -68,7 +68,7 @@
         ctx.lineTo((0.25 * GRID_SIZE) | 0, (0.15 * GRID_SIZE) | 0);
         ctx.stroke();
         ctx.restore();
-        ctx.translate(GRID_SIZE,0);
+        ctx.translate(GRID_SIZE, 0);
       }
       ctx.restore();
     }
@@ -81,7 +81,7 @@
 
     var n;
     var angle;
-    
+
     for (var j, i = 0; i < rows; i++) {
       xoff = 0;
       for (j = 0; j < cols; j++) {

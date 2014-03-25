@@ -12,11 +12,14 @@
   var MAX_RADIUS = 13;
   var MIN_VELOCITY = -3;
   var MAX_VELOCITY = 3;
-  
+
   var behaviors = App.Behaviors;
   var vehicles = [];
   var target = new Particle();
   var mouseDown = false;
+
+  var pointQuad = true;
+  var tree;
 
   App.Agents.forces = {
     seek: 1,
@@ -25,26 +28,38 @@
     align: 1.5,
     cohere: 0,
     flow: 0
-  }
+  };
 
   App.Agents.init = function(ctx, width, height) {
     var config = this.config;
 
+    var bounds = {
+      x: 0,
+      y: 0,
+      width: width,
+      height: height
+    };
+
+    tree = new QuadTree(bounds, pointQuad);
+
     ctx.fillStyle = FILL_STYLE;
 
     target.setPosition(
-      utils.random(0, width),
-      utils.random(0, height)
+        utils.random(0, width),
+        utils.random(0, height)
     );
-    
+
     setupVehicles(vehicles, VEHICLE_COUNT, width, height);
     draw();
 
     function draw() {
       ctx.clearRect(0, 0, width, height);
+      tree.clear();
+      tree.insert(vehicles);
       target.update();
       for (var i = 0; i < vehicles.length; i++) {
-        applyBehaviors(vehicles[i], App.Agents.forces);
+        var cell = tree.retrieve(vehicles[i]);
+        applyBehaviors(vehicles[i], vehicles, App.Agents.forces);
         vehicles[i].update();
         vehicles[i].draw(ctx);
       }
@@ -64,7 +79,7 @@
     target.setPosition(evt.clientX, evt.clientY);
   };
 
-  function applyBehaviors(vehicle, forces) {  
+  function applyBehaviors(vehicle, cell, forces) {
     var cohere = behaviors.cohere(vehicles, vehicle);
     var align = behaviors.align(vehicles, vehicle);
     var separate = behaviors.separate(vehicles, vehicle);
@@ -100,19 +115,20 @@
     for (var i = 0; i < vehicleCount; i++) {
       vehicle = new Particle(utils.random(0, width), utils.random(0, height));
       vehicle.constrain(
-        -SCENE_PADDING,
-        width + SCENE_PADDING,
-        -SCENE_PADDING,
-        height + SCENE_PADDING
+          -SCENE_PADDING,
+          width + SCENE_PADDING,
+          -SCENE_PADDING,
+          height + SCENE_PADDING
       );
       vehicle.setVelocity(
-        utils.random(MIN_VELOCITY, MAX_VELOCITY),
-        utils.random(MIN_VELOCITY, MAX_VELOCITY)
+          utils.random(MIN_VELOCITY, MAX_VELOCITY),
+          utils.random(MIN_VELOCITY, MAX_VELOCITY)
       );
       vehicle.radius = utils.random(MIN_RADIUS, MAX_RADIUS);
       vehicle.maxSpeed = MAX_SPEED;
       vehicle.doDraw = drawBoid;
       vehicles.push(vehicle);
+      tree.insert(vehicle);
     }
   }
 
@@ -120,8 +136,8 @@
     var theta = this.velocity.heading();
     ctx.rotate(theta);
     ctx.beginPath();
-    ctx.moveTo(~~(-this.radius), ~~(-this.radius/2));
-    ctx.lineTo(~~(-this.radius), ~~(this.radius/2));
+    ctx.moveTo(~~(-this.radius), ~~(-this.radius / 2));
+    ctx.lineTo(~~(-this.radius), ~~(this.radius / 2));
     ctx.lineTo(~~(this.radius), 0);
     ctx.closePath();
     ctx.fill();

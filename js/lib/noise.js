@@ -31,11 +31,11 @@
  */ (function() {
 
   var F2 = 0.5 * (Math.sqrt(3.0) - 1.0),
-    G2 = (3.0 - Math.sqrt(3.0)) / 6.0,
-    F3 = 1.0 / 3.0,
-    G3 = 1.0 / 6.0,
-    F4 = (Math.sqrt(5.0) - 1.0) / 4.0,
-    G4 = (5.0 - Math.sqrt(5.0)) / 20.0;
+      G2 = (3.0 - Math.sqrt(3.0)) / 6.0,
+      F3 = 1.0 / 3.0,
+      G3 = 1.0 / 6.0,
+      F4 = (Math.sqrt(5.0) - 1.0) / 4.0,
+      G4 = (5.0 - Math.sqrt(5.0)) / 20.0;
 
 
   function SimplexNoise(random) {
@@ -55,19 +55,19 @@
   SimplexNoise.prototype = {
     grad3: new Float32Array([1, 1, 0, -1, 1, 0, 1, -1, 0,
 
-    -1, -1, 0, 1, 0, 1, -1, 0, 1,
+      -1, -1, 0, 1, 0, 1, -1, 0, 1,
 
-    1, 0, -1, -1, 0, -1, 0, 1, 1,
+      1, 0, -1, -1, 0, -1, 0, 1, 1,
 
-    0, -1, 1, 0, 1, -1, 0, -1, -1]),
+      0, -1, 1, 0, 1, -1, 0, -1, -1]),
     grad4: new Float32Array([0, 1, 1, 1, 0, 1, 1, -1, 0, 1, -1, 1, 0, 1, -1, -1, 0, -1, 1, 1, 0, -1, 1, -1, 0, -1, -1, 1, 0, -1, -1, -1, 1, 0, 1, 1, 1, 0, 1, -1, 1, 0, -1, 1, 1, 0, -1, -1, -1, 0, 1, 1, -1, 0, 1, -1, -1, 0, -1, 1, -1, 0, -1, -1, 1, 1, 0, 1, 1, 1, 0, -1, 1, -1, 0, 1, 1, -1, 0, -1, -1, 1, 0, 1, -1, 1, 0, -1, -1, -1, 0, 1, -1, -1, 0, -1, 1, 1, 1, 0, 1, 1, -1, 0, 1, -1, 1, 0, 1, -1, -1, 0, -1, 1, 1, 0, -1, 1, -1, 0, -1, -1, 1, 0, -1, -1, -1, 0]),
     noise2D: function(xin, yin) {
       var permMod12 = this.permMod12,
-        perm = this.perm,
-        grad3 = this.grad3;
+          perm = this.perm,
+          grad3 = this.grad3;
       var n0 = 0,
-        n1 = 0,
-        n2 = 0; // Noise contributions from the three corners
+          n1 = 0,
+          n2 = 0; // Noise contributions from the three corners
       // Skew the input space to determine which simplex cell we're in
       var s = (xin + yin) * F2; // Hairy factor for 2D
       var i = Math.floor(xin + s);
@@ -124,8 +124,8 @@
     // 3D simplex noise
     noise3D: function(xin, yin, zin) {
       var permMod12 = this.permMod12,
-        perm = this.perm,
-        grad3 = this.grad3;
+          perm = this.perm,
+          grad3 = this.grad3;
       var n0, n1, n2, n3; // Noise contributions from the four corners
       // Skew the input space to determine which simplex cell we're in
       var s = (xin + yin + zin) * F3; // Very nice and simple skew factor for 3D
@@ -247,8 +247,8 @@
     // 4D simplex noise, better simplex rank ordering method 2012-03-09
     noise4D: function(x, y, z, w) {
       var permMod12 = this.permMod12,
-        perm = this.perm,
-        grad4 = this.grad4;
+          perm = this.perm,
+          grad4 = this.grad4;
 
       var n0, n1, n2, n3, n4; // Noise contributions from the five corners
       // Skew the (x,y,z,w) space to determine which cell of 24 simplices we're in

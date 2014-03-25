@@ -7,6 +7,9 @@ function Particle(x, y) {
   this.velocity = Vector.get();
   this.acceleration = Vector.get();
 
+  this.x = this.position.x;
+  this.y = this.position.y;
+
   this.radius = 1;
   this.mass = 1;
   this.maxSpeed = 0;
@@ -19,6 +22,9 @@ Particle.prototype.fillColor = 'black';
 Particle.prototype.setPosition = function(x, y) {
   this.position.x = ~~x;
   this.position.y = ~~y;
+
+  this.x = this.position.x;
+  this.y = this.position.y;
 };
 
 Particle.prototype.setVelocity = function(x, y) {
@@ -91,7 +97,7 @@ Particle.prototype.limitVelocity = function() {
     this.velocity.normalize();
     this.velocity.mult(this.maxSpeed);
   }
-}
+};
 
 Particle.prototype.draw = function(ctx) {
   ctx.save();
@@ -103,7 +109,7 @@ Particle.prototype.draw = function(ctx) {
 
 Particle.prototype.doDraw = function(ctx) {
   ctx.beginPath();
-  ctx.moveTo(0,0);
+  ctx.moveTo(0, 0);
   ctx.arc(0, 0, this.radius, 0, Math.PI / 2);
   ctx.lineTo(0, 0);
   ctx.closePath();
@@ -126,10 +132,10 @@ Particle.prototype.attract = function(mover) {
 
 Particle.prototype.doesCollide = function(particle) {
   var dist = Vector.get(
-    this.position.x - particle.position.x,
-    this.position.y - particle.position.y
-  )
+      this.position.x - particle.position.x,
+      this.position.y - particle.position.y
+      );
   var magn = dist.magnitude();
   Vector.recycle(dist);
   return magn <= this.radius + particle.radius;
-}
+};

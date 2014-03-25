@@ -32,12 +32,16 @@
   });
 
   var controls = App.elements.forceControls;
+  var values = App.elements.forceValues;
 
   var names = Object.keys(controls);
   names.forEach(function(f) {
     controls[f].value = App.Agents.forces[f];
+    if (values[f]) values[f].innerHTML = App.Agents.forces[f];
     controls[f].addEventListener('change', function(evt) {
-      App.Agents.forces[f] = parseInt(this.value, 10) || 0;
+      var value = parseInt(this.value, 10) || 0;
+      App.Agents.forces[f] = value;
+      if (values[f]) values[f].innerHTML = value;
     });
   });
 

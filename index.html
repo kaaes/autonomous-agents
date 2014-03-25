@@ -23,27 +23,33 @@
         <h3>Controls</h3>
         <p>
             <label>Seek mouse:</label>
-            <input id="control-seek" step="0.1" type="number" class="canvas-control" />
+            <input id="control-seek" min="-10" max="10" type="range" class="canvas-control" />
+            <span id="control-seek-value"></span>
         </p>
         <p>
             <label>Flee mouse:</label>
-            <input id="control-flee" step="0.1" type="number" class="canvas-control" />
+            <input id="control-flee" min="-10" max="10" type="range" class="canvas-control" />
+            <span id="control-flee-value"></span>
         </p>
         <p>
             <label>Separation:</label>
-            <input id="control-separate" step="0.1" type="number" class="canvas-control" />
+            <input id="control-separate" min="-10" max="10" type="range" class="canvas-control" />
+            <span id="control-separate-value"></span>
         </p>
         <p>
             <label>Alignment:</label>
-            <input id="control-align" step="0.1" type="number" class="canvas-control" />
+            <input id="control-align" min="-10" max="10" type="range" class="canvas-control" />
+            <span id="control-align-value"></span>
         </p>
         <p>
             <label>Cohesion:</label>
-            <input id="control-cohere" step="0.1" type="number" class="canvas-control" />
+            <input id="control-cohere" min="-10" max="10" type="range" class="canvas-control" />
+            <span id="control-cohere-value"></span>
         </p>
         <p>
             <label>Flow field:</label>
-            <input id="control-flow" step="0.1" type="number" class="canvas-control" />
+            <input id="control-flow" min="-10" max="10" type="range" class="canvas-control" />
+            <span id="control-flow-value"></span>
         </p>
         <p>
             <label for="control-show-flow" class="for-checkbox">Show flow field:</label>
@@ -72,7 +78,15 @@
                 cohere: document.querySelector('#control-cohere'),
                 flow: document.querySelector('#control-flow')
             },
-            showFlowField: document.querySelector('#control-show-flow')
+            forceValues: {
+                seek: document.querySelector('#control-seek-value'),
+                flee: document.querySelector('#control-flee-value'),
+                separate: document.querySelector('#control-separate-value'),
+                align: document.querySelector('#control-align-value'),
+                cohere: document.querySelector('#control-cohere-value'),
+                flow: document.querySelector('#control-flow-value')
+            },
+            showFlowField: document.querySelector('#control-show-flow'),
         }
     </script>
     <script src="./js/pattern.js"></script>

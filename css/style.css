@@ -53,7 +53,7 @@ canvas.agents {
 }
 
 .canvas-controls p {
-	margin: .5em 0;
+	margin: .8em 0;
 }
 
 .canvas-controls label {
@@ -67,10 +67,7 @@ canvas.agents {
 }
 
 .canvas-control {
-	width: 3em;
-	background: #eee;
-	border-radius: 3px;
-	border: solid 1px #ccc;
-	font-family: 'Alegreya Sans SC', sans-serif;
+	width: 5em;
 	font-size: 1em;
+	margin-right: .5em;
 }

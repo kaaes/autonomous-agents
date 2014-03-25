@@ -27,8 +27,8 @@
   App.Agents.forces = {
     seek: 1,
     flee: 10,
-    separate: 1.5,
-    align: 1.5,
+    separate: 2,
+    align: 2,
     cohere: 0,
     flow: 0
   };

@@ -12,8 +12,8 @@ Vector.get = function(x, y) {
   return v;
 };
 
-Vector.recycle = function(v) {
-  Vector._vectors.push(v);
+Vector.recycle = function() {
+  Array.prototype.push.apply(Vector._vectors, arguments);
 };
 
 /* static methods */

@@ -21,6 +21,9 @@
   var pointQuad = true;
   var tree;
 
+  // reusable counter
+  var i;
+
   App.Agents.forces = {
     seek: 1,
     flee: 10,
@@ -40,13 +43,13 @@
       height: height
     };
 
-    tree = new QuadTree(bounds, pointQuad);
+    //tree = new QuadTree(bounds, false, 2, 4);
 
     ctx.fillStyle = FILL_STYLE;
 
     target.setPosition(
-        utils.random(0, width),
-        utils.random(0, height)
+      utils.random(0, width),
+      utils.random(0, height)
     );
 
     setupVehicles(vehicles, VEHICLE_COUNT, width, height);
@@ -54,11 +57,10 @@
 
     function draw() {
       ctx.clearRect(0, 0, width, height);
-      tree.clear();
-      tree.insert(vehicles);
+      //tree.clear();
+      //tree.insert(vehicles);
       target.update();
-      for (var i = 0; i < vehicles.length; i++) {
-        var cell = tree.retrieve(vehicles[i]);
+      for (i = 0; i < vehicles.length; i++) {
         applyBehaviors(vehicles[i], vehicles, App.Agents.forces);
         vehicles[i].update();
         vehicles[i].draw(ctx);
@@ -80,9 +82,9 @@
   };
 
   function applyBehaviors(vehicle, cell, forces) {
-    var cohere = behaviors.cohere(vehicles, vehicle);
-    var align = behaviors.align(vehicles, vehicle);
-    var separate = behaviors.separate(vehicles, vehicle);
+    var cohere = behaviors.cohere(cell, vehicle);
+    var align = behaviors.align(cell, vehicle);
+    var separate = behaviors.separate(cell, vehicle);
     var seek = behaviors.seek(target, vehicle);
     var flee = behaviors.flee(target, vehicle);
     var flow = behaviors.flow(vehicle);
@@ -101,43 +103,37 @@
     vehicle.addForce(seek);
     vehicle.addForce(flee);
 
-    Vector.recycle(separate);
-    Vector.recycle(align);
-    Vector.recycle(cohere);
-    Vector.recycle(seek);
-    Vector.recycle(flee);
-    Vector.recycle(flow);
+    Vector.recycle(separate, align, cohere, seek, flee, flow);
   }
 
   function setupVehicles(vehicles, vehicleCount, width, height) {
     var vehicle;
     var config = App.Agents.config;
-    for (var i = 0; i < vehicleCount; i++) {
+    for (i = 0; i < vehicleCount; i++) {
       vehicle = new Particle(utils.random(0, width), utils.random(0, height));
-      vehicle.constrain(
-          -SCENE_PADDING,
-          width + SCENE_PADDING,
-          -SCENE_PADDING,
-          height + SCENE_PADDING
+      vehicle.constrain(-SCENE_PADDING,
+        width + SCENE_PADDING, -SCENE_PADDING,
+        height + SCENE_PADDING
       );
       vehicle.setVelocity(
-          utils.random(MIN_VELOCITY, MAX_VELOCITY),
-          utils.random(MIN_VELOCITY, MAX_VELOCITY)
+        utils.random(MIN_VELOCITY, MAX_VELOCITY),
+        utils.random(MIN_VELOCITY, MAX_VELOCITY)
       );
       vehicle.radius = utils.random(MIN_RADIUS, MAX_RADIUS);
+      vehicle.width = 0;
+      vehicle.height = 0;
       vehicle.maxSpeed = MAX_SPEED;
       vehicle.doDraw = drawBoid;
       vehicles.push(vehicle);
-      tree.insert(vehicle);
+      //tree.insert(vehicle);
     }
   }
 
   function drawBoid(ctx) {
-    var theta = this.velocity.heading();
-    ctx.rotate(theta);
+    ctx.rotate(this.velocity.heading());
     ctx.beginPath();
-    ctx.moveTo(~~(-this.radius), ~~(-this.radius / 2));
-    ctx.lineTo(~~(-this.radius), ~~(this.radius / 2));
+    ctx.moveTo(~~(-this.radius), ~~ (-this.radius / 2));
+    ctx.lineTo(~~(-this.radius), ~~ (this.radius / 2));
     ctx.lineTo(~~(this.radius), 0);
     ctx.closePath();
     ctx.fill();

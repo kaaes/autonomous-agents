@@ -8,6 +8,11 @@
   var FLOCK_DISTANCE = 50;
   var FLEE_DISTANCE = 200;
 
+  var i = 0;
+  var distanceSq = 0;
+  var count = 0;
+  var interactionDistance = 0;
+
   App.Behaviors.seek = function(target, mover) {
     var desired = Vector.sub(target.position, mover.position);
     desired.normalize();
@@ -20,9 +25,9 @@
   }
 
   App.Behaviors.flee = function(target, mover) {
-    var distSq = Vector.distSq(target.position, mover.position);
+    distanceSq = Vector.distSq(target.position, mover.position);
     var steer;
-    if (distSq < FLEE_DISTANCE * FLEE_DISTANCE) {
+    if (distanceSq < FLEE_DISTANCE * FLEE_DISTANCE) {
       var desired = Vector.sub(mover.position, target.position);
       desired.normalize();
       desired.mult(mover.maxSpeed);
@@ -37,12 +42,12 @@
   }
 
   App.Behaviors.align = function(vehicles, mover) {
-    var distanceSq;
     var sum = Vector.get();
     var steer = Vector.get();
-    var count = 0;
 
-    for (var i = 0; i < vehicles.length; i++) {
+    count = 0;
+
+    for (i = 0; i < vehicles.length; i++) {
       distanceSq = Vector.distSq(mover.position, vehicles[i].position);
       if (distanceSq > 0 && distanceSq < FLOCK_DISTANCE * FLOCK_DISTANCE) {
         sum.add(vehicles[i].velocity);
@@ -62,17 +67,16 @@
   }
 
   App.Behaviors.separate = function(vehicles, mover) {
-    var distanceSq;
-    var separationDistance;
     var sum = Vector.get();
     var steer = Vector.get();
     var diff;
-    var count = 0;
 
-    for (var i = 0; i < vehicles.length; i++) {
-      separationDistance = mover.radius + vehicles[i].radius;
+    count = 0;
+
+    for (i = 0; i < vehicles.length; i++) {
+      interactionDistance = mover.radius + vehicles[i].radius;
       distanceSq = Vector.distSq(mover.position, vehicles[i].position);
-      if (distanceSq > 0 && distanceSq < separationDistance * separationDistance) {
+      if (distanceSq > 0 && distanceSq < interactionDistance * interactionDistance) {
         diff = Vector.sub(mover.position, vehicles[i].position);
         diff.normalize();
         diff.div(distanceSq);
@@ -95,13 +99,13 @@
   }
 
   App.Behaviors.cohere = function(vehicles, mover) {
-    var distanceSq;
     var sum = Vector.get();
     var steer = Vector.get();
     var desired;
-    var count = 0;
 
-    for (var i = 0; i < vehicles.length; i++) {
+    count = 0;
+
+    for (i = 0; i < vehicles.length; i++) {
       distanceSq = Vector.distSq(mover.position, vehicles[i].position);
       if (distanceSq > 0 && distanceSq < FLOCK_DISTANCE * FLOCK_DISTANCE) {
         sum.add(vehicles[i].position);

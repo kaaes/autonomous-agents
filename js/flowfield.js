@@ -19,6 +19,10 @@
   var width;
   var height;
 
+  var column = 0;
+  var row = 0;
+  var field = [];
+
   App.FlowField.init = function(context, canvasWidth, canvasHeight) {
     var noise = new SimplexNoise();
 
@@ -43,13 +47,13 @@
     ctx.clearRect(0, 0, width, height);
   }
 
-	App.FlowField.lookup = function(vector) {
-  	var column = Math.floor(vector.x / GRID_SIZE);
-    var row = Math.floor(vector.y / GRID_SIZE);
-    var field = grid[row] || grid[0];
+  App.FlowField.lookup = function(vector) {
+    column = (vector.x / GRID_SIZE) | 0;
+    row = (vector.y / GRID_SIZE) | 0;
+    field = grid[row] || grid[0];
     field = field[column] || field[0];
     return Vector.get(field.x, field.y);
-	}
+  }
 
   function drawGrid(ctx, grid, cols, rows) {
     ctx.save();

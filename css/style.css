@@ -3,6 +3,11 @@ html, body {
 	height: 100%;
 }
 
+a {
+	color: rgb(202,118,57);
+	font-weight: 400;
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -12,6 +17,7 @@ body {
 	font-family: 'Alegreya Sans SC', sans-serif;
 	font-weight: 300;
 	overflow: hidden;
+	text-shadow: 0px 0px 0 1 #000;
 }
 
 canvas.pattern {
@@ -36,12 +42,13 @@ canvas.agents {
 
 .canvas-controls {
 	position: fixed;
+	width: 13em;
 	top: 0;
 	left: 10px;
 	background: rgba(0,0,0,.3);
 	height: 100%;
 	padding: 1em;
-	color: #eee;
+	color: #ccc;
 	z-index: 4;
 
 	-webkit-touch-callout: none;
@@ -53,7 +60,12 @@ canvas.agents {
 }
 
 .canvas-controls p {
-	margin: .8em 0;
+	margin: .5em 0;
+}
+
+.canvas-controls h3 {
+	border-bottom: solid 1px #333;
+	padding-bottom: .2em;
 }
 
 .canvas-controls label {
@@ -66,8 +78,15 @@ canvas.agents {
 	width: auto;
 }
 
-.canvas-control {
+.canvas-control[type=range] {
 	width: 5em;
 	font-size: 1em;
 	margin-right: .5em;
+}
+
+.ribbon {
+	z-index: 99;
+	position: absolute;
+	top: -10px;
+	right: -10px;
 }
